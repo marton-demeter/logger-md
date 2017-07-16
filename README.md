@@ -16,6 +16,8 @@ It has 5 different message levels:
 
 ## Usage
 
+### Code
+
 ```javascript
   const log = require('logger-md');
   
@@ -26,6 +28,8 @@ It has 5 different message levels:
   log.error(`This is an error message`);
   
 ```
+
+### Output
 
 <img src="./images/logger-md-demo.png" width=210 height=79>
 
