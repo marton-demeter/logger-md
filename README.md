@@ -27,6 +27,8 @@ It has 5 different message levels:
   
 ```
 
+![logger-md-demo](./pictures/logger-md-demo.png)
+
 ## License
 
 [ISC](https://spdx.org/licenses/ISC)
