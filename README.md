@@ -27,7 +27,7 @@ It has 5 different message levels:
   
 ```
 
-![logger-md-demo](./pictures/logger-md-demo.png)
+<img src="./images/logger-md-demo.png" width=210 height=79>
 
 ## License
 
