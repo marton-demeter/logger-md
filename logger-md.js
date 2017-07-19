@@ -40,11 +40,13 @@ Logger.prototype.debug.update.symbol = (symbol) => {
   Logger.prototype.debug.symbol.symbol = symbol;
 };
 Logger.prototype.debug.update.symbol.color = (color) => {
-  Logger.prototype.debug.symbol.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.debug.symbol.color = color;
 };
 Logger.prototype.debug.update.message = () => {};
 Logger.prototype.debug.update.message.color = (color) => {
-  Logger.prototype.debug.message.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.debug.message.color = color;
 };
 Logger.prototype.debug.reset = () => {
   Logger.prototype.debug.symbol.symbol = debug_symbol_symbol_default;
@@ -88,11 +90,13 @@ Logger.prototype.info.update.symbol = (symbol) => {
   Logger.prototype.info.symbol.symbol = symbol;
 };
 Logger.prototype.info.update.symbol.color = (color) => {
-  Logger.prototype.info.symbol.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.info.symbol.color = color;
 };
 Logger.prototype.info.update.message = () => {};
 Logger.prototype.info.update.message.color = (color) => {
-  Logger.prototype.info.message.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.info.message.color = color;
 };
 Logger.prototype.info.reset = () => {
   Logger.prototype.info.symbol.symbol = info_symbol_symbol_default;
@@ -136,11 +140,13 @@ Logger.prototype.success.update.symbol = (symbol) => {
   Logger.prototype.success.symbol.symbol = symbol;
 };
 Logger.prototype.success.update.symbol.color = (color) => {
-  Logger.prototype.success.symbol.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.success.symbol.color = color;
 };
 Logger.prototype.success.update.message = () => {};
 Logger.prototype.success.update.message.color = (color) => {
-  Logger.prototype.success.message.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.success.message.color = color;
 };
 Logger.prototype.success.reset = () => {
   Logger.prototype.success.symbol.symbol = success_symbol_symbol_default;
@@ -184,11 +190,13 @@ Logger.prototype.warning.update.symbol = (symbol) => {
   Logger.prototype.warning.symbol.symbol = symbol;
 };
 Logger.prototype.warning.update.symbol.color = (color) => {
-  Logger.prototype.warning.symbol.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.warning.symbol.color = color;
 };
 Logger.prototype.warning.update.message = () => {};
 Logger.prototype.warning.update.message.color = (color) => {
-  Logger.prototype.warning.message.color = color;
+  if(Logger.prototype.isHex(color))
+    Logger.prototype.warning.message.color = color;
 };
 Logger.prototype.warning.reset = () => {
   Logger.prototype.warning.symbol.symbol = warning_symbol_symbol_default;
@@ -232,10 +240,12 @@ Logger.prototype.error.update.symbol = (symbol) => {
   Logger.prototype.error.symbol.symbol = symbol;
 };
 Logger.prototype.error.update.symbol.color = (color) => {
+    if(Logger.prototype.isHex(color))
   Logger.prototype.error.symbol.color = color;
 };
 Logger.prototype.error.update.message = () => {};
 Logger.prototype.error.update.message.color = (color) => {
+    if(Logger.prototype.isHex(color))
   Logger.prototype.error.message.color = color;
 };
 Logger.prototype.error.reset = () => {
@@ -256,6 +266,13 @@ Logger.prototype.error.reset.symbol.color = () => {
 Logger.prototype.error.reset.message = () => {};
 Logger.prototype.error.reset.message.color = () => {
   Logger.prototype.error.message.color = error_message_color_default;
+}
+
+Logger.prototype.isHex = (value) => {
+  value.slice(0,1) === '#' ? value = value.slice(1) : value;
+  if(value.length != 6 && value.length != 3) return false;
+  return (parseInt(value,16).toString(16) === value.toLowerCase() ||
+          parseInt(value,16).toString(16) === '0')
 }
 
 const logger = new Logger();
