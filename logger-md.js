@@ -40,13 +40,15 @@ Logger.prototype.debug.update.symbol = (symbol) => {
   Logger.prototype.debug.symbol.symbol = symbol;
 };
 Logger.prototype.debug.update.symbol.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.debug.symbol.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.debug.symbol.color = color;
 };
 Logger.prototype.debug.update.message = () => {};
 Logger.prototype.debug.update.message.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.debug.message.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.debug.message.color = color;
 };
 Logger.prototype.debug.reset = () => {
   Logger.prototype.debug.symbol.symbol = debug_symbol_symbol_default;
@@ -90,13 +92,15 @@ Logger.prototype.info.update.symbol = (symbol) => {
   Logger.prototype.info.symbol.symbol = symbol;
 };
 Logger.prototype.info.update.symbol.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.info.symbol.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.info.symbol.color = color;
 };
 Logger.prototype.info.update.message = () => {};
 Logger.prototype.info.update.message.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.info.message.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.info.message.color = color;
 };
 Logger.prototype.info.reset = () => {
   Logger.prototype.info.symbol.symbol = info_symbol_symbol_default;
@@ -140,13 +144,15 @@ Logger.prototype.success.update.symbol = (symbol) => {
   Logger.prototype.success.symbol.symbol = symbol;
 };
 Logger.prototype.success.update.symbol.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.success.symbol.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.success.symbol.color = color;
 };
 Logger.prototype.success.update.message = () => {};
 Logger.prototype.success.update.message.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.success.message.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.success.message.color = color;
 };
 Logger.prototype.success.reset = () => {
   Logger.prototype.success.symbol.symbol = success_symbol_symbol_default;
@@ -190,13 +196,15 @@ Logger.prototype.warning.update.symbol = (symbol) => {
   Logger.prototype.warning.symbol.symbol = symbol;
 };
 Logger.prototype.warning.update.symbol.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.warning.symbol.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.warning.symbol.color = color;
 };
 Logger.prototype.warning.update.message = () => {};
 Logger.prototype.warning.update.message.color = (color) => {
-  if(Logger.prototype.isHex(color))
-    Logger.prototype.warning.message.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+      Logger.prototype.warning.message.color = color;
 };
 Logger.prototype.warning.reset = () => {
   Logger.prototype.warning.symbol.symbol = warning_symbol_symbol_default;
@@ -240,13 +248,15 @@ Logger.prototype.error.update.symbol = (symbol) => {
   Logger.prototype.error.symbol.symbol = symbol;
 };
 Logger.prototype.error.update.symbol.color = (color) => {
-    if(Logger.prototype.isHex(color))
-  Logger.prototype.error.symbol.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+    Logger.prototype.error.symbol.color = color;
 };
 Logger.prototype.error.update.message = () => {};
 Logger.prototype.error.update.message.color = (color) => {
-    if(Logger.prototype.isHex(color))
-  Logger.prototype.error.message.color = color;
+  var c = Logger.prototype.isHex(color);
+  if(c)
+    Logger.prototype.error.message.color = color;
 };
 Logger.prototype.error.reset = () => {
   Logger.prototype.error.symbol.symbol = error_symbol_symbol_default;
@@ -271,8 +281,37 @@ Logger.prototype.error.reset.message.color = () => {
 Logger.prototype.isHex = (value) => {
   value.slice(0,1) === '#' ? value = value.slice(1) : value;
   if(value.length != 6 && value.length != 3) return false;
-  return (parseInt(value,16).toString(16) === value.toLowerCase() ||
-          parseInt(value,16).toString(16) === '0')
+  var final = parseInt(value,16).toString(16);
+  var ret = final;
+  if(final.length != 6 || final.length != 3)
+    for(let i = 0; i < value.length - final.length; ++i)
+      ret = '0' + ret;
+  if(ret === value.toLowerCase()) return '#'+ret;
+  else return false;
+}
+
+Logger.prototype.update = () => {};
+Logger.prototype.update.message = () => {};
+Logger.prototype.update.message.color = (color) => { 
+  Logger.prototype.debug.update.message.color(color);
+  Logger.prototype.info.update.message.color(color);
+  Logger.prototype.success.update.message.color(color);
+  Logger.prototype.warning.update.message.color(color);
+  Logger.prototype.error.update.message.color(color);
+}
+Logger.prototype.update.symbol = (symbol) => {
+  Logger.prototype.debug.update.symbol(symbol);
+  Logger.prototype.info.update.symbol(symbol);
+  Logger.prototype.success.update.symbol(symbol);
+  Logger.prototype.warning.update.symbol(symbol);
+  Logger.prototype.error.update.symbol(symbol);
+}
+Logger.prototype.update.symbol.color = (color) => {
+  Logger.prototype.debug.update.symbol.color(color);
+  Logger.prototype.info.update.symbol.color(color);
+  Logger.prototype.success.update.symbol.color(color);
+  Logger.prototype.warning.update.symbol.color(color);
+  Logger.prototype.error.update.symbol.color(color);
 }
 
 Logger.prototype.preset_1 = () => {
@@ -282,13 +321,10 @@ Logger.prototype.preset_1 = () => {
   Logger.prototype.warning.reset();
   Logger.prototype.error.reset();
 };
+Logger.prototype.reset = () => { Logger.prototype.preset_1() }
 
 Logger.prototype.preset_2 = () => {
-  Logger.prototype.debug.update.message.color('ddd')
-  Logger.prototype.info.update.message.color('ddd')
-  Logger.prototype.success.update.message.color('ddd')
-  Logger.prototype.warning.update.message.color('ddd')
-  Logger.prototype.error.update.message.color('ddd')
+  Logger.prototype.update.message.color('ddd');
 };
 
 Logger.prototype.preset_3 = () => {
@@ -305,15 +341,11 @@ Logger.prototype.preset_4 = () => {
   Logger.prototype.success.update.symbol('SUCCESS\t');
   Logger.prototype.warning.update.symbol('WARNING\t');
   Logger.prototype.error.update.symbol('ERROR\t');
-  Logger.prototype.debug.update.message.color('ddd')
-  Logger.prototype.info.update.message.color('ddd')
-  Logger.prototype.success.update.message.color('ddd')
-  Logger.prototype.warning.update.message.color('ddd')
-  Logger.prototype.error.update.message.color('ddd')
+  Logger.prototype.update.message.color('ddd');
 }
 
 const logger = new Logger();
 
-logger.preset_1();
+logger.reset();
 
 module.exports = logger;
