@@ -1,6 +1,6 @@
 {
   "name": "logger-md",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A simple cli logger",
   "main": "logger-md.js",
   "scripts": {
