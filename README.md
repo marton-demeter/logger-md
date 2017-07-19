@@ -16,8 +16,6 @@ It has 5 different message levels:
 
 ## Usage
 
-### Code
-
 ```javascript
   const log = require('logger-md');
   
@@ -29,9 +27,26 @@ It has 5 different message levels:
   
 ```
 
-### Output
-
 <img src="./images/logger-md-demo.png" width=210 height=79>
+
+## Customization
+
+```javascript
+  const log = require('logger-md');
+  
+  log.info.update.symbol('[INFO]\t');
+  log.info.update.symbol.color('#00ff00');
+  log.info.update.message.color('#999999');
+  
+  log.info('This is an info message');
+  
+  log.info.reset();
+  
+  log.info('This is another info message');
+```
+
+<img src="./images/logger-md-customization.png" width=233 height=37>
+
 
 ## License
 
