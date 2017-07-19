@@ -1,14 +1,14 @@
 ## Description
 
-A simple cli logger that writes to stdout.
+A simple cli logger that writes to stdout and stderr.
 
 It has 5 different message levels:
 
-  * debug
-  * info
-  * success
-  * warning
-  * error
+  * debug (stdout)
+  * info (stdout)
+  * success (stdout)
+  * warning (stderr)
+  * error (stderr)
 
 ## Installation
 

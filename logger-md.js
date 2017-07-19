@@ -1,44 +1,57 @@
-const chalk = require('chalk');
+const styles = require('ansi-styles');
 
 var Logger = function() {};
 
 Logger.prototype.debug = (message) => {
   if(message) {
-    const debug_symbol = chalk.dim;
-    const debug_message = chalk.dim;
-    console.log(debug_symbol(`[*] `) + debug_message(`${message}`));
+    console.log(
+      styles.color.ansi256.hex('#787878') +
+      `[*] ${message}` + 
+      styles.color.close
+    );
   }
 }
 
 Logger.prototype.info = (message) => {
   if(message) {
-    const info_symbol = chalk.rgb(135,206,235);
-    const info_message = chalk.white;
-    console.log(info_symbol(`[*] `) + info_message(`${message}`));
+    console.log(
+      styles.color.ansi256.hex('#88ccff') +
+      `[*] ` +
+      styles.color.close +
+      styles.color.ansi256.hex('#ffffff') +
+      `${message}` +
+      styles.color.close
+    );
   }
 }
 
 Logger.prototype.success = (message) => {
   if(message) {
-    const success_symbol = chalk.green;
-    const success_message = chalk.green;
-    console.log(success_symbol(`[+] `) + success_message(`${message}`));
+    console.log(
+      styles.color.ansi256.hex('#00ff00') +
+      `[+] ${message}` + 
+      styles.color.close
+    );
   }
 }
 
 Logger.prototype.warning = (message) => {
   if(message) {
-    const warning_symbol = chalk.rgb(255,140,0);
-    const warning_message = chalk.rgb(255,140,0);
-    console.log(warning_symbol(`[!] `) + warning_message(`${message}`));
+    console.error(
+      styles.color.ansi256.hex('#ff8800') +
+      `[+] ${message}` + 
+      styles.color.close
+    );
   }
 }
 
 Logger.prototype.error = (message) => {
   if(message) {
-    const error_symbol = chalk.red;
-    const error_message = chalk.red;
-    console.log(error_symbol(`[-] `) + error_message(`${message}`));
+    console.error(
+      styles.color.ansi256.hex('#ff0000') +
+      `[+] ${message}` + 
+      styles.color.close
+    );
   }
 }
 
