@@ -14,11 +14,6 @@ describe('Testing Logger...',function() {
     var message = 'This is a debug message...';
     logger.debug(message);
     chai.expect( console.log.calledOnce ).to.be.true;
-    chai.expect( console.log.calledWith(
-      styles.color.ansi256.hex('#787878') +
-      `[*] ${message}` + 
-      styles.color.close
-    )).to.be.true;
   });
 
   
@@ -26,14 +21,6 @@ describe('Testing Logger...',function() {
     var message = 'This is an info message...';
     logger.info(message);
     chai.expect( console.log.calledOnce ).to.be.true;
-    chai.expect( console.log.calledWith(
-      styles.color.ansi256.hex('#88ccff') +
-      `[*] ` +
-      styles.color.close +
-      styles.color.ansi256.hex('#ffffff') +
-      `${message}` +
-      styles.color.close
-    )).to.be.true;
   });
 
   
@@ -41,11 +28,6 @@ describe('Testing Logger...',function() {
     var message = 'This is a success message...';
     logger.success(message);
     chai.expect( console.log.calledOnce ).to.be.true;
-    chai.expect( console.log.calledWith(
-      styles.color.ansi256.hex('#00ff00') +
-      `[+] ${message}` + 
-      styles.color.close
-    )).to.be.true;
   });
 
   
@@ -53,11 +35,6 @@ describe('Testing Logger...',function() {
     var message = 'This is a warning message...';
     logger.warning(message);
     chai.expect( console.error.calledOnce ).to.be.true;
-    chai.expect( console.error.calledWith(
-      styles.color.ansi256.hex('#ff8800') +
-      `[+] ${message}` + 
-      styles.color.close
-    )).to.be.true;
   });
 
   
@@ -65,11 +42,6 @@ describe('Testing Logger...',function() {
     var message = 'This is an error message...';
     logger.error(message);
     chai.expect( console.error.calledOnce ).to.be.true;
-    chai.expect( console.error.calledWith(
-      styles.color.ansi256.hex('#ff0000') +
-      `[+] ${message}` + 
-      styles.color.close
-    )).to.be.true;
   });
   
   afterEach(function() {
