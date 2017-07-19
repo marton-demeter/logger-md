@@ -275,12 +275,45 @@ Logger.prototype.isHex = (value) => {
           parseInt(value,16).toString(16) === '0')
 }
 
+Logger.prototype.preset_1 = () => {
+  Logger.prototype.debug.reset();
+  Logger.prototype.info.reset();
+  Logger.prototype.success.reset();
+  Logger.prototype.warning.reset();
+  Logger.prototype.error.reset();
+};
+
+Logger.prototype.preset_2 = () => {
+  Logger.prototype.debug.update.message.color('ddd')
+  Logger.prototype.info.update.message.color('ddd')
+  Logger.prototype.success.update.message.color('ddd')
+  Logger.prototype.warning.update.message.color('ddd')
+  Logger.prototype.error.update.message.color('ddd')
+};
+
+Logger.prototype.preset_3 = () => {
+  Logger.prototype.debug.update.symbol('DEBUG\t');
+  Logger.prototype.info.update.symbol('INFO\t');
+  Logger.prototype.success.update.symbol('SUCCESS\t');
+  Logger.prototype.warning.update.symbol('WARNING\t');
+  Logger.prototype.error.update.symbol('ERROR\t');
+};
+
+Logger.prototype.preset_4 = () => {
+  Logger.prototype.debug.update.symbol('DEBUG\t');
+  Logger.prototype.info.update.symbol('INFO\t');
+  Logger.prototype.success.update.symbol('SUCCESS\t');
+  Logger.prototype.warning.update.symbol('WARNING\t');
+  Logger.prototype.error.update.symbol('ERROR\t');
+  Logger.prototype.debug.update.message.color('ddd')
+  Logger.prototype.info.update.message.color('ddd')
+  Logger.prototype.success.update.message.color('ddd')
+  Logger.prototype.warning.update.message.color('ddd')
+  Logger.prototype.error.update.message.color('ddd')
+}
+
 const logger = new Logger();
 
-logger.debug.reset();
-logger.info.reset();
-logger.success.reset();
-logger.warning.reset();
-logger.error.reset();
+logger.preset_1();
 
 module.exports = logger;
