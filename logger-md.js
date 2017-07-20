@@ -27,13 +27,14 @@ const error_message_color_default = '#ff0000';
 Logger.prototype.debug = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.DEBUG) {
-      console.log(
+      process.stdout.write(
         styles.color.ansi256.hex(Logger.prototype.debug.symbol.color) +
         Logger.prototype.debug.symbol.symbol +
         styles.color.close +
         styles.color.ansi256.hex(Logger.prototype.debug.message.color) +
         `${message}` +
-        styles.color.close
+        styles.color.close + 
+        Logger.prototype.line_ending
       );
     }
   }
@@ -81,13 +82,14 @@ Logger.prototype.debug.reset.message.color = () => {
 Logger.prototype.info = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.INFO) {
-      console.log(
+      process.stdout.write(
         styles.color.ansi256.hex(Logger.prototype.info.symbol.color) +
         Logger.prototype.info.symbol.symbol +
         styles.color.close +
         styles.color.ansi256.hex(Logger.prototype.info.message.color) +
         `${message}` +
-        styles.color.close
+        styles.color.close + 
+        Logger.prototype.line_ending
       );
     }
   }
@@ -135,13 +137,14 @@ Logger.prototype.info.reset.message.color = () => {
 Logger.prototype.success = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.SUCCESS) {
-      console.log(
+      process.stdout.write(
         styles.color.ansi256.hex(Logger.prototype.success.symbol.color) +
         Logger.prototype.success.symbol.symbol +
         styles.color.close +
         styles.color.ansi256.hex(Logger.prototype.success.message.color) +
         `${message}` +
-        styles.color.close
+        styles.color.close + 
+        Logger.prototype.line_ending
       );
     }
   }
@@ -189,13 +192,14 @@ Logger.prototype.success.reset.message.color = () => {
 Logger.prototype.warning = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.WARNING) {
-      console.error(
+      process.stderr.write(
         styles.color.ansi256.hex(Logger.prototype.warning.symbol.color) +
         Logger.prototype.warning.symbol.symbol +
         styles.color.close +
         styles.color.ansi256.hex(Logger.prototype.warning.message.color) +
         `${message}` +
-        styles.color.close
+        styles.color.close + 
+        Logger.prototype.line_ending
       );
     }
   }
@@ -243,13 +247,14 @@ Logger.prototype.warning.reset.message.color = () => {
 Logger.prototype.error = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.ERROR) {
-      console.error(
+      process.stderr.write(
         styles.color.ansi256.hex(Logger.prototype.error.symbol.color) +
         Logger.prototype.error.symbol.symbol +
         styles.color.close +
         styles.color.ansi256.hex(Logger.prototype.error.message.color) +
         `${message}` +
-        styles.color.close
+        styles.color.close + 
+        Logger.prototype.line_ending
       );
     }
   }
@@ -307,6 +312,10 @@ Logger.prototype.isHex = (value) => {
 }
 
 Logger.prototype.update = () => {};
+Logger.prototype.line_ending = '\n';
+Logger.prototype.update.line_ending = (line_ending) => {
+  Logger.prototype.line_ending = line_ending;
+}
 Logger.prototype.update.message = () => {};
 Logger.prototype.update.message.color = (color) => { 
   Logger.prototype.debug.update.message.color(color);
