@@ -83,16 +83,6 @@ Shortcut to accessing some preset styles.
 
 <img src="./images/logger-md-preset-4.png" width=270 height=80>
 
-## log.update.message.color(color)
-
-Sets the same message color for ALL message levels.
-
-```javascript
-  log.update.message.color('#0000ff');
-```
-
-<img src="./images/logger-md-message-color.png" width=240 height=80>
-
 ## log.update.symbol(symbol)
 
 Sets the same symbol for ALL message levels.
@@ -113,9 +103,19 @@ Sets the same symbol color for ALL message levels.
 
 <img src="./images/logger-md-symbol-color.png" width=240 height=80>
 
+## log.update.message.color(color)
+
+Sets the same message color for ALL message levels.
+
+```javascript
+  log.update.message.color('#0000ff');
+```
+
+<img src="./images/logger-md-message-color.png" width=240 height=80>
+
 ## log.update.level(level)
 
-Displays all messages above the set log level. The levels start from DEBUG(0) and go up to ERROR(5). The enums for the level can be accessed with:
+Displays all messages above the set log level. The levels start from DEBUG(0) and go up to ERROR(4). The enums for the level can be accessed with:
 
   - log.DEBUG
   - log.INFO
