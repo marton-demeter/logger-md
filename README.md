@@ -128,7 +128,3 @@ Displays all messages above the set log level. The levels start from DEBUG(0) an
 ```
 
 <img src="./images/logger-md-level.png" width=240 height=50>
-
-# License
-
-[ISC](https://spdx.org/licenses/ISC)
