@@ -13,10 +13,10 @@
   "author": "Marton Demeter <marton1029@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
-    "ansi-styles": "^3.1.0"
+    "colors-md": "^0.0.1",
+    "pad-md": "^0.0.2"
   },
   "devDependencies": {
-    "ansi-styles": "^3.1.0",
     "chai": "^4.1.0",
     "mocha": "^3.4.2",
     "sinon": "^2.3.8"
