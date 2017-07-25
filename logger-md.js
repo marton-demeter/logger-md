@@ -1,5 +1,6 @@
-const styles = require('ansi-styles');
-const pad = require('../pad-md/pad-md.js');
+const colors = require('colors-md');
+const pad = require('pad-md');
+
 Logger = function() {};
 
 Logger.prototype.DEBUG = 0;
@@ -28,12 +29,12 @@ Logger.prototype.debug = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.DEBUG) {
       process.stdout.write(
-        styles.color.ansi256.hex(Logger.prototype.debug.symbol.color) +
+        colors.ansi256.hex(Logger.prototype.debug.symbol.color) +
         Logger.prototype.debug.symbol.symbol +
-        styles.color.close +
-        styles.color.ansi256.hex(Logger.prototype.debug.message.color) +
+        colors.reset +
+        colors.ansi256.hex(Logger.prototype.debug.message.color) +
         `${message}` +
-        styles.color.close + 
+        colors.reset + 
         Logger.prototype.line_ending
       );
     }
@@ -42,7 +43,7 @@ Logger.prototype.debug = (message) => {
 Logger.prototype.debug.return = (message) => {
   if(message) {    
     return {
-      message:`${styles.color.ansi256.hex(Logger.prototype.debug.symbol.color)}${Logger.prototype.debug.symbol.symbol}${styles.color.close}${styles.color.ansi256.hex(Logger.prototype.debug.message.color)}${message}${styles.color.close}`,
+      message:`${colors.ansi256.hex(Logger.prototype.debug.symbol.color)}${Logger.prototype.debug.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.debug.message.color)}${message}${colors.reset}`,
       length: message.length + Logger.prototype.debug.symbol.symbol.length
     }
   }
@@ -91,12 +92,12 @@ Logger.prototype.info = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.INFO) {
       process.stdout.write(
-        styles.color.ansi256.hex(Logger.prototype.info.symbol.color) +
+        colors.ansi256.hex(Logger.prototype.info.symbol.color) +
         Logger.prototype.info.symbol.symbol +
-        styles.color.close +
-        styles.color.ansi256.hex(Logger.prototype.info.message.color) +
+        colors.reset +
+        colors.ansi256.hex(Logger.prototype.info.message.color) +
         `${message}` +
-        styles.color.close + 
+        colors.reset + 
         Logger.prototype.line_ending
       );
       return (Logger.prototype.info.symbol.symbol.length + message.length);
@@ -106,7 +107,7 @@ Logger.prototype.info = (message) => {
 Logger.prototype.info.return = (message) => {
   if(message) {    
     return {
-      message:`${styles.color.ansi256.hex(Logger.prototype.info.symbol.color)}${Logger.prototype.info.symbol.symbol}${styles.color.close}${styles.color.ansi256.hex(Logger.prototype.info.message.color)}${message}${styles.color.close}`,
+      message:`${colors.ansi256.hex(Logger.prototype.info.symbol.color)}${Logger.prototype.info.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.info.message.color)}${message}${colors.reset}`,
       length: message.length + Logger.prototype.info.symbol.symbol.length
     }
   }
@@ -155,12 +156,12 @@ Logger.prototype.success = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.SUCCESS) {
       process.stdout.write(
-        styles.color.ansi256.hex(Logger.prototype.success.symbol.color) +
+        colors.ansi256.hex(Logger.prototype.success.symbol.color) +
         Logger.prototype.success.symbol.symbol +
-        styles.color.close +
-        styles.color.ansi256.hex(Logger.prototype.success.message.color) +
+        colors.reset +
+        colors.ansi256.hex(Logger.prototype.success.message.color) +
         `${message}` +
-        styles.color.close + 
+        colors.reset + 
         Logger.prototype.line_ending
       );
     }
@@ -169,7 +170,7 @@ Logger.prototype.success = (message) => {
 Logger.prototype.success.return = (message) => {
   if(message) {    
     return {
-      message:`${styles.color.ansi256.hex(Logger.prototype.success.symbol.color)}${Logger.prototype.success.symbol.symbol}${styles.color.close}${styles.color.ansi256.hex(Logger.prototype.success.message.color)}${message}${styles.color.close}`,
+      message:`${colors.ansi256.hex(Logger.prototype.success.symbol.color)}${Logger.prototype.success.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.success.message.color)}${message}${colors.reset}`,
       length: message.length + Logger.prototype.success.symbol.symbol.length
     }
   }
@@ -218,12 +219,12 @@ Logger.prototype.warning = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.WARNING) {
       process.stderr.write(
-        styles.color.ansi256.hex(Logger.prototype.warning.symbol.color) +
+        colors.ansi256.hex(Logger.prototype.warning.symbol.color) +
         Logger.prototype.warning.symbol.symbol +
-        styles.color.close +
-        styles.color.ansi256.hex(Logger.prototype.warning.message.color) +
+        colors.reset +
+        colors.ansi256.hex(Logger.prototype.warning.message.color) +
         `${message}` +
-        styles.color.close + 
+        colors.reset + 
         Logger.prototype.line_ending
       );
     }
@@ -232,7 +233,7 @@ Logger.prototype.warning = (message) => {
 Logger.prototype.warning.return = (message) => {
   if(message) {    
     return {
-      message:`${styles.color.ansi256.hex(Logger.prototype.warning.symbol.color)}${Logger.prototype.warning.symbol.symbol}${styles.color.close}${styles.color.ansi256.hex(Logger.prototype.warning.message.color)}${message}${styles.color.close}`,
+      message:`${colors.ansi256.hex(Logger.prototype.warning.symbol.color)}${Logger.prototype.warning.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.warning.message.color)}${message}${colors.reset}`,
       length: message.length + Logger.prototype.warning.symbol.symbol.length
     }
   }
@@ -281,12 +282,12 @@ Logger.prototype.error = (message) => {
   if(message) {
     if(Logger.prototype.level <= Logger.prototype.ERROR) {
       process.stderr.write(
-        styles.color.ansi256.hex(Logger.prototype.error.symbol.color) +
+        colors.ansi256.hex(Logger.prototype.error.symbol.color) +
         Logger.prototype.error.symbol.symbol +
-        styles.color.close +
-        styles.color.ansi256.hex(Logger.prototype.error.message.color) +
+        colors.reset +
+        colors.ansi256.hex(Logger.prototype.error.message.color) +
         `${message}` +
-        styles.color.close + 
+        colors.reset + 
         Logger.prototype.line_ending
       );
     }
@@ -295,7 +296,7 @@ Logger.prototype.error = (message) => {
 Logger.prototype.error.return = (message) => {
   if(message) {    
     return {
-      message:`${styles.color.ansi256.hex(Logger.prototype.error.symbol.color)}${Logger.prototype.error.symbol.symbol}${styles.color.close}${styles.color.ansi256.hex(Logger.prototype.error.message.color)}${message}${styles.color.close}`,
+      message:`${colors.ansi256.hex(Logger.prototype.error.symbol.color)}${Logger.prototype.error.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.error.message.color)}${message}${colors.reset}`,
       length: message.length + Logger.prototype.error.symbol.symbol.length
     }
   }
