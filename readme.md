@@ -128,3 +128,14 @@ Displays all messages above the set log level. The levels start from DEBUG(0) an
 ```
 
 <img src="./images/logger-md-level.png" width=240 height=50>
+
+# Advanced usage
+
+Return strings without writing them to stdout / stderr.
+The functions return an object with the modified string and the length of the original message.
+
+```javascript
+  var value = log.info.return(`text`);
+  var message = value.message; // color codes included
+  var length = value.length; // `text`.length w/o color codes
+```
