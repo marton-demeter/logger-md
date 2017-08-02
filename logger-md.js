@@ -1,438 +1,265 @@
 const colors = require('colors-md');
-const pad = require('pad-md');
+const padder = require('pad-md');
 
-Logger = function() {};
+Logger = function() {}
 
-Logger.prototype.DEBUG = 0;
-Logger.prototype.INFO = 1;
-Logger.prototype.SUCCESS = 2;
-Logger.prototype.WARNING = 3;
-Logger.prototype.ERROR = 4;
-
-const debug_symbol_symbol_default   = '[*] ';
-const debug_symbol_color_default    = '#787878';
-const debug_message_color_default   = '#787878';
-const info_symbol_symbol_default    = '[*] ';
-const info_symbol_color_default     = '#88ccff';
-const info_message_color_default    = '#ffffff';
-const success_symbol_symbol_default = '[+] ';
-const success_symbol_color_default  = '#00ff00';
-const success_message_color_default = '#00ff00';
-const warning_symbol_symbol_default = '[!] ';
-const warning_symbol_color_default  = '#ff8800';
-const warning_message_color_default = '#ff8800';
-const error_symbol_symbol_default   = '[-] ';
-const error_symbol_color_default    = '#ff0000';
-const error_message_color_default   = '#ff0000';
-
-Logger.prototype.debug = (message) => {
-  if(message) {
-    if(Logger.prototype.level <= Logger.prototype.DEBUG) {
-      process.stdout.write(
-        colors.ansi256.hex(Logger.prototype.debug.symbol.color) +
-        Logger.prototype.debug.symbol.symbol +
-        colors.reset +
-        colors.ansi256.hex(Logger.prototype.debug.message.color) +
-        `${message}` +
-        colors.reset + 
-        Logger.prototype.line_ending
-      );
+Logger.prototype = {
+  fmt: ':tkn:padtkn :lvl:padlvl :msg',
+  enum: {
+    debug: 0,
+    info: 1,
+    success: 2,
+    warning: 3,
+    error: 4
+  },
+  tkn: {
+    debug: '[*]',
+    info: '[*]',
+    success: '[+]',
+    warning: '[!]',
+    error: '[-]'
+  },
+  lvl: {
+    debug: 'DEBUG',
+    info: 'INFO',
+    success: 'SUCCESS',
+    warning: 'WARNING',
+    error: 'ERROR'
+  },
+  aln: {
+    tkn: 'left',
+    lvl: 'left'
+  },
+  msg: {
+    debug: 'debug',
+    info: 'info',
+    success: 'success',
+    warning: 'warning',
+    error: 'error',
+  },
+  out: console.log,
+  clr: {
+    tkn: {
+      debug: colors.ansi256.hex('#777'),
+      info: colors.ansi256.hex('#8cf'),
+      success: colors.ansi256.hex('#0f0'),
+      warning: colors.ansi256.hex('#f80'),
+      error: colors.ansi256.hex('#f00'),
+    },
+    lvl: {
+      debug: colors.ansi256.hex('#777'),
+      info: colors.ansi256.hex('#8cf'),
+      success: colors.ansi256.hex('#0f0'),
+      warning: colors.ansi256.hex('#f80'),
+      error: colors.ansi256.hex('#f00'),
+    },
+    msg: {
+      debug: colors.ansi256.hex('#eee'),
+      info: colors.ansi256.hex('#eee'),
+      success: colors.ansi256.hex('#eee'),
+      warning: colors.ansi256.hex('#eee'),
+      error: colors.ansi256.hex('#eee'),
     }
+  },
+  fnl: undefined,
+  crt_lvl: undefined,
+  log_lvl: 0,
+  clr_en: true,
+  pad: {
+    tkn: 0,
+    lvl: 0,
+  },
+  saved_state: {},
+  debug: function(msg) {
+    Logger.prototype.crt_lvl = 'debug';
+    Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
+    Logger.prototype.replace();
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
+      Logger.prototype.out(Logger.prototype.fnl);
+  },
+  info: function(msg) {
+    Logger.prototype.crt_lvl = 'info';
+    Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
+    Logger.prototype.replace();
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
+      Logger.prototype.out(Logger.prototype.fnl);
+  },
+  success: function(msg) {
+    Logger.prototype.crt_lvl = 'success';
+    Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
+    Logger.prototype.replace();
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
+      Logger.prototype.out(Logger.prototype.fnl);
+  },
+  warning: function(msg) {
+    Logger.prototype.crt_lvl = 'warning';
+    Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
+    Logger.prototype.replace();
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
+      Logger.prototype.out(Logger.prototype.fnl);
+  },
+  error: function(msg) {
+    Logger.prototype.crt_lvl = 'error';
+    Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
+    Logger.prototype.replace();
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
+      Logger.prototype.out(Logger.prototype.fnl);
+  },
+  replace: function() {
+    var rep_tkn = Logger.prototype.pad.tkn - Logger.prototype.tkn[Logger.prototype.crt_lvl].length;
+    if(rep_tkn < 0) rep_tkn = 0;
+    var rep_lvl = Logger.prototype.pad.lvl - Logger.prototype.lvl[Logger.prototype.crt_lvl].length;
+    if(rep_lvl < 0) rep_lvl = 0;
+    Logger.prototype.fnl = Logger.prototype.fmt;
+    if(Logger.prototype.clr_en) {
+      Logger.prototype.fnl = Logger.prototype.fnl.replace(':tkn', `${Logger.prototype.clr.tkn[Logger.prototype.crt_lvl]}:tkn`);
+      Logger.prototype.fnl = Logger.prototype.fnl.replace(':lvl', `${Logger.prototype.clr.lvl[Logger.prototype.crt_lvl]}:lvl`);
+      Logger.prototype.fnl = Logger.prototype.fnl.replace(':msg', `${Logger.prototype.clr.msg[Logger.prototype.crt_lvl]}:msg`);
+    }
+    Logger.prototype.fnl = Logger.prototype.fnl.replace(':tkn', Logger.prototype.tkn[Logger.prototype.crt_lvl]);
+    Logger.prototype.fnl = Logger.prototype.fnl.replace(':padtkn', ' '.repeat(rep_tkn));
+    Logger.prototype.fnl = Logger.prototype.fnl.replace(':lvl', Logger.prototype.lvl[Logger.prototype.crt_lvl]);
+    Logger.prototype.fnl = Logger.prototype.fnl.replace(':padlvl', ' '.repeat(rep_lvl));
+    Logger.prototype.fnl = Logger.prototype.fnl.replace(':msg',Logger.prototype.msg[Logger.prototype.crt_lvl]);
+  },
+  padder: function(what) {
+    var max = undefined;
+    var val = undefined;
+    Object.keys(Logger.prototype[what]).forEach((key) => {
+      val = Logger.prototype[what][key].length
+      if(max === undefined) max = val;
+      else if(max < val) max = val;
+      else {};
+    });
+    if(what === 'tkn') {
+      Logger.prototype.pad.tkn = max;
+      if(Logger.prototype.aln[what] === 'left') 
+        Logger.prototype.fmt = Logger.prototype.fmt.replace(':padtkn:tkn', ':tkn:padtkn');
+      if(Logger.prototype.aln[what] === 'right')
+        Logger.prototype.fmt = Logger.prototype.fmt.replace(':tkn:padtkn', ':padtkn:tkn');
+    }
+    if(what === 'lvl') {
+      Logger.prototype.pad.lvl = max;
+      if(Logger.prototype.aln[what] === 'left') 
+        Logger.prototype.fmt = Logger.prototype.fmt.replace(':padlvl:lvl', ':lvl:padlvl');
+      if(Logger.prototype.aln[what] === 'right')
+        Logger.prototype.fmt = Logger.prototype.fmt.replace(':lvl:padlvl', ':padlvl:lvl');
+    }
+  },
+  align: {},
+  set: {},
+  level: function(lvl) {
+    Logger.prototype.log_lvl = lvl;
+  },
+  save_preset: function(name) {
+    Logger.prototype.saved_state[name] = {
+      fmt: Logger.prototype.fmt,
+      tkn: Logger.prototype.tkn,
+      lvl: Logger.prototype.lvl,
+      aln: Logger.prototype.aln,
+      msg: Logger.prototype.msg,
+      out: Logger.prototype.out,
+      clr: Logger.prototype.clr,
+      fnl: Logger.prototype.fnl,
+      crt_lvl: Logger.prototype.crt_lvl,
+      log_lvl: Logger.prototype.log_lvl,
+      clr_en: Logger.prototype.clr_en,
+      pad: Logger.prototype.pad,
+    }
+  },
+  load_preset: function(name) {
+    Logger.prototype.fmt = Logger.prototype.saved_state[name].fmt;
+    Logger.prototype.tkn = Logger.prototype.saved_state[name].tkn;
+    Logger.prototype.lvl = Logger.prototype.saved_state[name].lvl;
+    Logger.prototype.aln = Logger.prototype.saved_state[name].aln;
+    Logger.prototype.msg = Logger.prototype.saved_state[name].msg;
+    Logger.prototype.out = Logger.prototype.saved_state[name].out;
+    Logger.prototype.clr = Logger.prototype.saved_state[name].clr;
+    Logger.prototype.fnl = Logger.prototype.saved_state[name].fnl;
+    Logger.prototype.crt_lvl = Logger.prototype.saved_state[name].crt_lvl;
+    Logger.prototype.log_lvl = Logger.prototype.saved_state[name].log_lvl;
+    Logger.prototype.clr_en = Logger.prototype.saved_state[name].clr_en;
+    Logger.prototype.pad = Logger.prototype.saved_state[name].pad;
   }
 }
-Logger.prototype.debug.return = (message) => {
-  if(message) {    
-    return {
-      message:`${colors.ansi256.hex(Logger.prototype.debug.symbol.color)}${Logger.prototype.debug.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.debug.message.color)}${message}${colors.reset}`,
-      length: message.length + Logger.prototype.debug.symbol.symbol.length
-    }
-  }
-}
-Logger.prototype.debug.symbol = {};
-Logger.prototype.debug.symbol.symbol = String();
-Logger.prototype.debug.symbol.color = String();
-Logger.prototype.debug.message = {};
-Logger.prototype.debug.message.color = String();
-Logger.prototype.debug.update = {};
-Logger.prototype.debug.update.symbol = (symbol) => {
-  Logger.prototype.debug.symbol.symbol = symbol;
-};
-Logger.prototype.debug.update.symbol.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.debug.symbol.color = color;
-};
-Logger.prototype.debug.update.message = {};
-Logger.prototype.debug.update.message.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.debug.message.color = color;
-};
-Logger.prototype.debug.reset = () => {
-  Logger.prototype.debug.symbol.symbol = debug_symbol_symbol_default;
-  Logger.prototype.debug.symbol.color = debug_symbol_color_default;
-  Logger.prototype.debug.message.color = debug_message_color_default;
-};
-Logger.prototype.debug.reset.symbol = () => {
-  Logger.prototype.debug.symbol.symbol = debug_symbol_symbol_default;
-  Logger.prototype.debug.symbol.color = debug_symbol_color_default;
-};
-Logger.prototype.debug.reset.symbol.symbol = () => {
-  Logger.prototype.debug.symbol.symbol = debug_symbol_symbol_default;
-};
-Logger.prototype.debug.reset.symbol.color = () => {
-  Logger.prototype.debug.symbol.color = debug_symbol_color_default;
-};
-Logger.prototype.debug.reset.message = {};
-Logger.prototype.debug.reset.message.color = () => {
-  Logger.prototype.debug.message.color = debug_message_color_default;
-}
 
-Logger.prototype.info = (message) => {
-  if(message) {
-    if(Logger.prototype.level <= Logger.prototype.INFO) {
-      process.stdout.write(
-        colors.ansi256.hex(Logger.prototype.info.symbol.color) +
-        Logger.prototype.info.symbol.symbol +
-        colors.reset +
-        colors.ansi256.hex(Logger.prototype.info.message.color) +
-        `${message}` +
-        colors.reset + 
-        Logger.prototype.line_ending
-      );
-      return (Logger.prototype.info.symbol.symbol.length + message.length);
-    }
-  }
-}
-Logger.prototype.info.return = (message) => {
-  if(message) {    
-    return {
-      message:`${colors.ansi256.hex(Logger.prototype.info.symbol.color)}${Logger.prototype.info.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.info.message.color)}${message}${colors.reset}`,
-      length: message.length + Logger.prototype.info.symbol.symbol.length
-    }
-  }
-}
-Logger.prototype.info.symbol = {};
-Logger.prototype.info.symbol.symbol = String();
-Logger.prototype.info.symbol.color = String();
-Logger.prototype.info.message = {};
-Logger.prototype.info.message.color = String();
-Logger.prototype.info.update = {};
-Logger.prototype.info.update.symbol = (symbol) => {
-  Logger.prototype.info.symbol.symbol = symbol;
+Logger.prototype.align.tkn = function(tkn) {
+  Logger.prototype.aln.tkn = tkn;
+  Logger.prototype.padder('tkn');
 };
-Logger.prototype.info.update.symbol.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.info.symbol.color = color;
-};
-Logger.prototype.info.update.message = {};
-Logger.prototype.info.update.message.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.info.message.color = color;
-};
-Logger.prototype.info.reset = () => {
-  Logger.prototype.info.symbol.symbol = info_symbol_symbol_default;
-  Logger.prototype.info.symbol.color = info_symbol_color_default;
-  Logger.prototype.info.message.color = info_message_color_default;
-};
-Logger.prototype.info.reset.symbol = () => {
-  Logger.prototype.info.symbol.symbol = info_symbol_symbol_default;
-  Logger.prototype.info.symbol.color = info_symbol_color_default;
-};
-Logger.prototype.info.reset.symbol.symbol = () => {
-  Logger.prototype.info.symbol.symbol = info_symbol_symbol_default;
-};
-Logger.prototype.info.reset.symbol.color = () => {
-  Logger.prototype.info.symbol.color = info_symbol_color_default;
-};
-Logger.prototype.info.reset.message = {};
-Logger.prototype.info.reset.message.color = () => {
-  Logger.prototype.info.message.color = info_message_color_default;
-}
-
-Logger.prototype.success = (message) => {
-  if(message) {
-    if(Logger.prototype.level <= Logger.prototype.SUCCESS) {
-      process.stdout.write(
-        colors.ansi256.hex(Logger.prototype.success.symbol.color) +
-        Logger.prototype.success.symbol.symbol +
-        colors.reset +
-        colors.ansi256.hex(Logger.prototype.success.message.color) +
-        `${message}` +
-        colors.reset + 
-        Logger.prototype.line_ending
-      );
-    }
-  }
-}
-Logger.prototype.success.return = (message) => {
-  if(message) {    
-    return {
-      message:`${colors.ansi256.hex(Logger.prototype.success.symbol.color)}${Logger.prototype.success.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.success.message.color)}${message}${colors.reset}`,
-      length: message.length + Logger.prototype.success.symbol.symbol.length
-    }
-  }
-}
-Logger.prototype.success.symbol = {};
-Logger.prototype.success.symbol.symbol = String();
-Logger.prototype.success.symbol.color = String();
-Logger.prototype.success.message = {};
-Logger.prototype.success.message.color = String();
-Logger.prototype.success.update = {};
-Logger.prototype.success.update.symbol = (symbol) => {
-  Logger.prototype.success.symbol.symbol = symbol;
-};
-Logger.prototype.success.update.symbol.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.success.symbol.color = color;
-};
-Logger.prototype.success.update.message = {};
-Logger.prototype.success.update.message.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.success.message.color = color;
-};
-Logger.prototype.success.reset = () => {
-  Logger.prototype.success.symbol.symbol = success_symbol_symbol_default;
-  Logger.prototype.success.symbol.color = success_symbol_color_default;
-  Logger.prototype.success.message.color = success_message_color_default;
-};
-Logger.prototype.success.reset.symbol = () => {
-  Logger.prototype.success.symbol.symbol = success_symbol_symbol_default;
-  Logger.prototype.success.symbol.color = success_symbol_color_default;
-};
-Logger.prototype.success.reset.symbol.symbol = () => {
-  Logger.prototype.success.symbol.symbol = success_symbol_symbol_default;
-};
-Logger.prototype.success.reset.symbol.color = () => {
-  Logger.prototype.success.symbol.color = success_symbol_color_default;
-};
-Logger.prototype.success.reset.message = {};
-Logger.prototype.success.reset.message.color = () => {
-  Logger.prototype.success.message.color = success_message_color_default;
-}
-
-Logger.prototype.warning = (message) => {
-  if(message) {
-    if(Logger.prototype.level <= Logger.prototype.WARNING) {
-      process.stderr.write(
-        colors.ansi256.hex(Logger.prototype.warning.symbol.color) +
-        Logger.prototype.warning.symbol.symbol +
-        colors.reset +
-        colors.ansi256.hex(Logger.prototype.warning.message.color) +
-        `${message}` +
-        colors.reset + 
-        Logger.prototype.line_ending
-      );
-    }
-  }
-}
-Logger.prototype.warning.return = (message) => {
-  if(message) {    
-    return {
-      message:`${colors.ansi256.hex(Logger.prototype.warning.symbol.color)}${Logger.prototype.warning.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.warning.message.color)}${message}${colors.reset}`,
-      length: message.length + Logger.prototype.warning.symbol.symbol.length
-    }
-  }
-}
-Logger.prototype.warning.symbol = {};
-Logger.prototype.warning.symbol.symbol = String();
-Logger.prototype.warning.symbol.color = String();
-Logger.prototype.warning.message = {};
-Logger.prototype.warning.message.color = String();
-Logger.prototype.warning.update = {};
-Logger.prototype.warning.update.symbol = (symbol) => {
-  Logger.prototype.warning.symbol.symbol = symbol;
-};
-Logger.prototype.warning.update.symbol.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.warning.symbol.color = color;
-};
-Logger.prototype.warning.update.message = {};
-Logger.prototype.warning.update.message.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-      Logger.prototype.warning.message.color = color;
-};
-Logger.prototype.warning.reset = () => {
-  Logger.prototype.warning.symbol.symbol = warning_symbol_symbol_default;
-  Logger.prototype.warning.symbol.color = warning_symbol_color_default;
-  Logger.prototype.warning.message.color = warning_message_color_default;
-};
-Logger.prototype.warning.reset.symbol = () => {
-  Logger.prototype.warning.symbol.symbol = warning_symbol_symbol_default;
-  Logger.prototype.warning.symbol.color = warning_symbol_color_default;
-};
-Logger.prototype.warning.reset.symbol.symbol = () => {
-  Logger.prototype.warning.symbol.symbol = warning_symbol_symbol_default;
-};
-Logger.prototype.warning.reset.symbol.color = () => {
-  Logger.prototype.warning.symbol.color = warning_symbol_color_default;
-};
-Logger.prototype.warning.reset.message = {};
-Logger.prototype.warning.reset.message.color = () => {
-  Logger.prototype.warning.message.color = warning_message_color_default;
-}
-
-Logger.prototype.error = (message) => {
-  if(message) {
-    if(Logger.prototype.level <= Logger.prototype.ERROR) {
-      process.stderr.write(
-        colors.ansi256.hex(Logger.prototype.error.symbol.color) +
-        Logger.prototype.error.symbol.symbol +
-        colors.reset +
-        colors.ansi256.hex(Logger.prototype.error.message.color) +
-        `${message}` +
-        colors.reset + 
-        Logger.prototype.line_ending
-      );
-    }
-  }
-}
-Logger.prototype.error.return = (message) => {
-  if(message) {    
-    return {
-      message:`${colors.ansi256.hex(Logger.prototype.error.symbol.color)}${Logger.prototype.error.symbol.symbol}${colors.reset}${colors.ansi256.hex(Logger.prototype.error.message.color)}${message}${colors.reset}`,
-      length: message.length + Logger.prototype.error.symbol.symbol.length
-    }
-  }
-}
-Logger.prototype.error.symbol = {};
-Logger.prototype.error.symbol.symbol = String();
-Logger.prototype.error.symbol.color = String();
-Logger.prototype.error.message = {};
-Logger.prototype.error.message.color = String();
-Logger.prototype.error.update = {};
-Logger.prototype.error.update.symbol = (symbol) => {
-  Logger.prototype.error.symbol.symbol = symbol;
-};
-Logger.prototype.error.update.symbol.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-    Logger.prototype.error.symbol.color = color;
-};
-Logger.prototype.error.update.message = {};
-Logger.prototype.error.update.message.color = (color) => {
-  var c = Logger.prototype.isHex(color);
-  if(c)
-    Logger.prototype.error.message.color = color;
-};
-Logger.prototype.error.reset = () => {
-  Logger.prototype.error.symbol.symbol = error_symbol_symbol_default;
-  Logger.prototype.error.symbol.color = error_symbol_color_default;
-  Logger.prototype.error.message.color = error_message_color_default;
-};
-Logger.prototype.error.reset.symbol = () => {
-  Logger.prototype.error.symbol.symbol = error_symbol_symbol_default;
-  Logger.prototype.error.symbol.color = error_symbol_color_default;
-};
-Logger.prototype.error.reset.symbol.symbol = () => {
-  Logger.prototype.error.symbol.symbol = error_symbol_symbol_default;
-};
-Logger.prototype.error.reset.symbol.color = () => {
-  Logger.prototype.error.symbol.color = error_symbol_color_default;
-};
-Logger.prototype.error.reset.message = {};
-Logger.prototype.error.reset.message.color = () => {
-  Logger.prototype.error.message.color = error_message_color_default;
-}
-
-Logger.prototype.isHex = (value) => {
-  value.slice(0,1) === '#' ? value = value.slice(1) : value;
-  if(value.length != 6 && value.length != 3) return false;
-  var final = parseInt(value,16).toString(16);
-  var ret = final;
-  if(final.length != 6 || final.length != 3)
-    for(let i = 0; i < value.length - final.length; ++i)
-      ret = '0' + ret;
-  if(ret === value.toLowerCase()) return '#'+ret;
-  else return false;
-}
-
-Logger.prototype.update = {};
-Logger.prototype.line_ending = '\n';
-Logger.prototype.update.line_ending = (line_ending) => {
-  Logger.prototype.line_ending = line_ending;
-}
-Logger.prototype.update.message = {};
-Logger.prototype.update.message.color = (color) => { 
-  Logger.prototype.debug.update.message.color(color);
-  Logger.prototype.info.update.message.color(color);
-  Logger.prototype.success.update.message.color(color);
-  Logger.prototype.warning.update.message.color(color);
-  Logger.prototype.error.update.message.color(color);
-}
-Logger.prototype.update.symbol = (symbol) => {
-  Logger.prototype.debug.update.symbol(symbol);
-  Logger.prototype.info.update.symbol(symbol);
-  Logger.prototype.success.update.symbol(symbol);
-  Logger.prototype.warning.update.symbol(symbol);
-  Logger.prototype.error.update.symbol(symbol);
-}
-Logger.prototype.update.symbol.color = (color) => {
-  Logger.prototype.debug.update.symbol.color(color);
-  Logger.prototype.info.update.symbol.color(color);
-  Logger.prototype.success.update.symbol.color(color);
-  Logger.prototype.warning.update.symbol.color(color);
-  Logger.prototype.error.update.symbol.color(color);
-}
-
-Logger.prototype.preset_1 = () => {
-  Logger.prototype.debug.reset();
-  Logger.prototype.info.reset();
-  Logger.prototype.success.reset();
-  Logger.prototype.warning.reset();
-  Logger.prototype.error.reset();
-};
-Logger.prototype.reset = () => { Logger.prototype.preset_1() }
-
-Logger.prototype.preset_2 = () => {
-  Logger.prototype.update.message.color('ddd');
+Logger.prototype.align.lvl = function(lvl) {
+  Logger.prototype.aln.lvl = lvl;
+  Logger.prototype.padder('lvl');
 };
 
-Logger.prototype.preset_3 = () => {
-  Logger.prototype.debug.update.symbol('DEBUG\t');
-  Logger.prototype.info.update.symbol('INFO\t');
-  Logger.prototype.success.update.symbol('SUCCESS\t');
-  Logger.prototype.warning.update.symbol('WARNING\t');
-  Logger.prototype.error.update.symbol('ERROR\t');
+Logger.prototype.set.token = function(tkn) {
+  Object.keys(Logger.prototype.tkn).forEach((key) => {
+    Logger.prototype.tkn[`${key}`] = tkn;
+  });
+  Logger.prototype.padder('tkn');
+};
+Logger.prototype.debug.token = function(tkn) {
+  Logger.prototype.tkn.debug = tkn;
+  Logger.prototype.padder('tkn');
+};
+Logger.prototype.info.token = function(tkn) {
+  Logger.prototype.tkn.info = tkn;
+  Logger.prototype.padder('tkn');
+};
+Logger.prototype.success.token = function(tkn) {
+  Logger.prototype.tkn.success = tkn;
+  Logger.prototype.padder('tkn');
+};
+Logger.prototype.warning.token = function(tkn) {
+  Logger.prototype.tkn.warning = tkn;
+  Logger.prototype.padder('tkn');
+};
+Logger.prototype.error.token = function(tkn) {
+  Logger.prototype.tkn.error = tkn;
+  Logger.prototype.padder('tkn');
 };
 
-Logger.prototype.preset_4 = () => {
-  Logger.prototype.debug.update.symbol('DEBUG\t');
-  Logger.prototype.info.update.symbol('INFO\t');
-  Logger.prototype.success.update.symbol('SUCCESS\t');
-  Logger.prototype.warning.update.symbol('WARNING\t');
-  Logger.prototype.error.update.symbol('ERROR\t');
-  Logger.prototype.update.message.color('ddd');
-}
 
-Logger.prototype.preset_5 = () => {
-  Logger.prototype.debug.update.symbol(`${pad.left('DEBUG ',7)}`);
-  Logger.prototype.info.update.symbol(`${pad.left('INFO ',7)}`);
-  Logger.prototype.success.update.symbol(`${pad.left('SUCCESS ',7)}`);
-  Logger.prototype.warning.update.symbol(`${pad.left('WARNING ',7)}`);
-  Logger.prototype.error.update.symbol(`${pad.left('ERROR ',7)}`);
-  Logger.prototype.update.message.color('ddd');
-}
-Logger.prototype.level = Logger.prototype.DEBUG;
-Logger.prototype.update.level = (level) => {
-  if(level != undefined && !isNaN(parseInt(level)))
-    Logger.prototype.level = parseInt(level);
-}
+Logger.prototype.set.level = function(lvl) {
+  Object.keys(Logger.prototype.lvl).forEach((key) => {
+    Logger.prototype.lvl[`${key}`] = lvl;
+  });
+  Logger.prototype.padder('lvl');
+};
+Logger.prototype.debug.level = function(lvl) {
+  Logger.prototype.lvl.debug = lvl;
+  Logger.prototype.padder('lvl');
+};
+Logger.prototype.info.level = function(lvl) {
+  Logger.prototype.lvl.info = lvl;
+  Logger.prototype.padder('lvl');
+};
+Logger.prototype.success.level = function(lvl) {
+  Logger.prototype.lvl.success = lvl;
+  Logger.prototype.padder('lvl');
+};
+Logger.prototype.warning.level = function(lvl) {
+  Logger.prototype.lvl.warning = lvl;
+  Logger.prototype.padder('lvl');
+};
+Logger.prototype.error.level = function(lvl) {
+  Logger.prototype.lvl.error = lvl;
+  Logger.prototype.padder('lvl');
+};
 
+Logger.prototype.set.format = function(fmt) {
+  Logger.prototype.fmt = fmt;
+};
+  
 const logger = new Logger();
 
-logger.DEBUG = Logger.prototype.DEBUG;
-logger.INFO = Logger.prototype.INFO;
-logger.SUCCESS = Logger.prototype.SUCCESS;
-logger.WARNING = Logger.prototype.WARNING;
-logger.ERROR = Logger.prototype.ERROR;
+logger.set.format(':lvl:padlvl :msg');
+logger.align.lvl('right');
+logger.save_preset(1);
 
-logger.reset();
+logger.set.format(':tkn:padtkn :lvl:padlvl :msg');
+logger.align.lvl('right');
+logger.align.tkn('left');
+logger.save_preset(2);
 
 module.exports = logger;
