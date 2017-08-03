@@ -1,6 +1,6 @@
 {
   "name": "logger-md",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "A simple, lightweight, customizable cli logger that writes to stdout and stderr.",
   "main": "logger-md.js",
   "scripts": {
