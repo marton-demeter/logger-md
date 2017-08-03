@@ -72,7 +72,7 @@ log.error.color.message(color)
 
 ### Characters
 
-###### Enable / Disable
+###### Disable
 
 log.token.disable()<br>
 log.level.disable()
