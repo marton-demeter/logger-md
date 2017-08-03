@@ -44,14 +44,14 @@ Logger.prototype = {
   out: console.log,
   clr: {
     tkn: {
-      debug: colors.hex('#808080'),
+      debug: colors.hex('#999'),
       info: colors.hex('#8cf'),
       success: colors.hex('#0f0'),
       warning: colors.hex('#f80'),
       error: colors.hex('#f00'),
     },
     lvl: {
-      debug: colors.hex('#808080'),
+      debug: colors.hex('#999'),
       info: colors.hex('#8cf'),
       success: colors.hex('#0f0'),
       warning: colors.hex('#f80'),
@@ -99,6 +99,7 @@ Logger.prototype = {
     Logger.prototype.crt_lvl = 'warning';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
+    Logger.prototype.out = console.error;
     if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
       Logger.prototype.out(Logger.prototype.fnl);
   },
@@ -106,6 +107,7 @@ Logger.prototype = {
     Logger.prototype.crt_lvl = 'error';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
+    Logger.prototype.out = console.error;
     if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
       Logger.prototype.out(Logger.prototype.fnl);
   },
@@ -155,7 +157,7 @@ Logger.prototype = {
   level: function(lvl) {
     Logger.prototype.log_lvl = lvl;
   },
-  save_preset: function(name) {
+  save: function(name) {
     Logger.prototype.saved_state[`${name}`] = {
       fmt: Logger.prototype.fmt,
       tkn: JSON.parse(JSON.stringify(Logger.prototype.tkn)),
@@ -171,7 +173,7 @@ Logger.prototype = {
       pad: JSON.parse(JSON.stringify(Logger.prototype.pad)),
     }
   },
-  load_preset: function(name) {
+  load: function(name) {
     Logger.prototype.fmt = Logger.prototype.saved_state[`${name}`].fmt;
     Logger.prototype.tkn = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].tkn));
     Logger.prototype.lvl = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].lvl));
@@ -201,6 +203,12 @@ Logger.prototype.set.token = function(tkn) {
     Logger.prototype.tkn[`${key}`] = tkn;
   });
   Logger.prototype.padder('tkn');
+};
+Logger.prototype.set.level = function(lvl) {
+  Object.keys(Logger.prototype.lvl).forEach((key) => {
+    Logger.prototype.lvl[`${key}`] = lvl;
+  });
+  Logger.prototype.padder('lvl');
 };
 Logger.prototype.debug.token = function(tkn) {
   Logger.prototype.tkn.debug = tkn;
@@ -251,26 +259,59 @@ Logger.prototype.error.level = function(lvl) {
   Logger.prototype.padder('lvl');
 };
 
-Logger.prototype.set.format = function(fmt) {
+Logger.prototype.format = function(fmt) {
   Logger.prototype.fmt = fmt;
 };
 
-Logger.prototype.set.color = {};
-Logger.prototype.set.color.token = function(clr) {
+Logger.prototype.color = {};
+Logger.prototype.color.token = function(clr) {
   Object.keys(Logger.prototype.clr.tkn).forEach((color) => {
     Logger.prototype.clr.tkn[`${color}`] = colors.hex(clr);
   });
+};
+Logger.prototype.color.level = function(clr) {
+  Object.keys(Logger.prototype.clr.lvl).forEach((color) => {
+    Logger.prototype.clr.lvl[`${color}`] = colors.hex(clr);
+  });
+};
+Logger.prototype.color.message = function(clr) {
+  Object.keys(Logger.prototype.clr.msg).forEach((color) => {
+    Logger.prototype.clr.msg[`${color}`] = colors.hex(clr);
+  });
+};
+
+Logger.prototype.color = {};
+Logger.prototype.color.enable = function() {
+  Logger.prototype.clr_en = true;
+};
+Logger.prototype.color.disable = function() {
+  Logger.prototype.clr_en = false;
+};
+
+Logger.prototype.token = {};
+Logger.prototype.token.disable = function() {
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(' :tkn:padtkn', '');
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(':tkn:padtkn ', '');
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(' :padtkn:tkn', '');
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(':padtkn:tkn ', '');
+}
+Logger.prototype.level = {};
+Logger.prototype.level.disable = function() {
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(' :lvl:padlvl', '');
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(':lvl:padlvl ', '');
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(' :padlvl:lvl', '');
+  Logger.prototype.fmt = Logger.prototype.fmt.replace(':padlvl:lvl ', '');
 }
   
 const logger = new Logger();
 
-logger.set.format(':lvl:padlvl :msg');
+logger.format(':lvl:padlvl :msg');
 logger.align.level('right');
-logger.save_preset(1);
+logger.save(1);
 
-logger.set.format(':tkn:padtkn :lvl:padlvl :msg');
+logger.format(':tkn:padtkn :lvl:padlvl :msg');
 logger.align.level('right');
 logger.align.token('left');
-logger.save_preset(2);
+logger.save(2);
 
 module.exports = logger;
