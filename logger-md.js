@@ -1,5 +1,9 @@
-const colors = require('colors-md');
+var colors = require('colors-md');
 const padder = require('pad-md');
+const os = require('os');
+
+if(os.platform() === 'darwin') colors = colors.ansi256;
+else colors = colors.ansi8;
 
 Logger = function() {}
 
@@ -40,25 +44,25 @@ Logger.prototype = {
   out: console.log,
   clr: {
     tkn: {
-      debug: colors.ansi256.hex('#777'),
-      info: colors.ansi256.hex('#8cf'),
-      success: colors.ansi256.hex('#0f0'),
-      warning: colors.ansi256.hex('#f80'),
-      error: colors.ansi256.hex('#f00'),
+      debug: colors.hex('#808080'),
+      info: colors.hex('#8cf'),
+      success: colors.hex('#0f0'),
+      warning: colors.hex('#f80'),
+      error: colors.hex('#f00'),
     },
     lvl: {
-      debug: colors.ansi256.hex('#777'),
-      info: colors.ansi256.hex('#8cf'),
-      success: colors.ansi256.hex('#0f0'),
-      warning: colors.ansi256.hex('#f80'),
-      error: colors.ansi256.hex('#f00'),
+      debug: colors.hex('#808080'),
+      info: colors.hex('#8cf'),
+      success: colors.hex('#0f0'),
+      warning: colors.hex('#f80'),
+      error: colors.hex('#f00'),
     },
     msg: {
-      debug: colors.ansi256.hex('#eee'),
-      info: colors.ansi256.hex('#eee'),
-      success: colors.ansi256.hex('#eee'),
-      warning: colors.ansi256.hex('#eee'),
-      error: colors.ansi256.hex('#eee'),
+      debug: colors.hex('#eee'),
+      info: colors.hex('#eee'),
+      success: colors.hex('#eee'),
+      warning: colors.hex('#eee'),
+      error: colors.hex('#eee'),
     }
   },
   fnl: undefined,
@@ -254,7 +258,7 @@ Logger.prototype.set.format = function(fmt) {
 Logger.prototype.set.color = {};
 Logger.prototype.set.color.token = function(clr) {
   Object.keys(Logger.prototype.clr.tkn).forEach((color) => {
-    Logger.prototype.clr.tkn[`${color}`] = colors.ansi256.hex(clr);
+    Logger.prototype.clr.tkn[`${color}`] = colors.hex(clr);
   });
 }
   
