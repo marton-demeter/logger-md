@@ -204,12 +204,6 @@ Logger.prototype.set.token = function(tkn) {
   });
   Logger.prototype.padder('tkn');
 };
-Logger.prototype.set.level = function(lvl) {
-  Object.keys(Logger.prototype.lvl).forEach((key) => {
-    Logger.prototype.lvl[`${key}`] = lvl;
-  });
-  Logger.prototype.padder('lvl');
-};
 Logger.prototype.debug.token = function(tkn) {
   Logger.prototype.tkn.debug = tkn;
   Logger.prototype.padder('tkn');
@@ -231,6 +225,7 @@ Logger.prototype.error.token = function(tkn) {
   Logger.prototype.padder('tkn');
 };
 
+Logger.prototype.level
 
 Logger.prototype.set.level = function(lvl) {
   Object.keys(Logger.prototype.lvl).forEach((key) => {
@@ -295,7 +290,9 @@ Logger.prototype.token.disable = function() {
   Logger.prototype.fmt = Logger.prototype.fmt.replace(' :padtkn:tkn', '');
   Logger.prototype.fmt = Logger.prototype.fmt.replace(':padtkn:tkn ', '');
 }
-Logger.prototype.level = {};
+Logger.prototype.level = function(lvl) {
+ Logger.prototype.log_lvl = lvl; 
+};
 Logger.prototype.level.disable = function() {
   Logger.prototype.fmt = Logger.prototype.fmt.replace(' :lvl:padlvl', '');
   Logger.prototype.fmt = Logger.prototype.fmt.replace(':lvl:padlvl ', '');
