@@ -275,7 +275,6 @@ Logger.prototype.color.message = function(clr) {
   });
 };
 
-Logger.prototype.color = {};
 Logger.prototype.color.enable = function() {
   Logger.prototype.clr_en = true;
 };
