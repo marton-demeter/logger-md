@@ -101,7 +101,7 @@ log.error.level(level)
 
 ### Alignment
 
-log.align.token(align)
+log.align.token(align)<br>
 log.align.level(align)
 
 ### Save / load state
