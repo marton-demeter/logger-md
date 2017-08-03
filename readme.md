@@ -1,4 +1,4 @@
-# Description
+## Description
 
 A simple, lightweight, customizable cli logger that writes to stdout and stderr.
 
@@ -10,17 +10,17 @@ It has 5 different message levels:
   * warning (stderr)
   * error (stderr)
 
-# Installation
+## Installation
 
-### Local
+###### Local
 
-```npm install --save logger-md```
+```[sudo] npm install --save logger-md```
 
-### Global
+###### Global
 
 ```[sudo] npm install --global logger-md```
 
-# Usage
+## Usage
 
 ```javascript
   const log = require('logger-md');
@@ -33,109 +33,103 @@ It has 5 different message levels:
   
 ```
 
-<img src="./images/logger-md-demo.png" width=210 height=79>
+## Customization / API
 
-# Customization
+### Colors
 
-Note: The functions that take a color argument need to be given a hex color value.
+###### Enable / Disable
 
-```javascript
-  const log = require('logger-md');
-  
-  log.info.update.symbol('[INFO]\t');
-  log.info.update.symbol.color('#00ff00');
-  log.info.update.message.color('#999999');
-  
-  log.info('This is an info message');
-  
-  log.info.reset();
-  
-  log.info('This is another info message');
-```
+log.color.enable()<br>
+log.color.disable()
 
-<img src="./images/logger-md-customization.png" width=233 height=37>
+###### All
 
-# Convenience Functions
+log.color.token(color)<br>
+log.color.level(color)<br>
+log.color.message(color)
 
-## log.reset()
+###### Specific
 
-Resets symbols, message and symbol colors, and log level to their default values.
+log.debug.color.token(color)<br>
+log.debug.color.level(color)<br>
+log.debug.color.message(color)
 
-<img src="./images/logger-md-preset-1.png" width=233 height=80>
+log.info.color.token(color)<br>
+log.info.color.level(color)<br>
+log.info.color.message(color)
 
-## log.preset_#()
+log.success.color.token(color)<br>
+log.success.color.level(color)<br>
+log.success.color.message(color)
 
-Shortcut to accessing some preset styles.
+log.warning.color.token(color)<br>
+log.warning.color.level(color)<br>
+log.warning.color.message(color)
 
-#### log.preset_1() [default]
+log.error.color.token(color)<br>
+log.error.color.level(color)<br>
+log.error.color.message(color)
 
-<img src="./images/logger-md-preset-1.png" width=240 height=80>
+### Characters
 
-#### log.preset_2()
+###### Enable / Disable
 
-<img src="./images/logger-md-preset-2.png" width=240 height=80>
+log.token.disable()<br>
+log.level.disable()
 
-#### log.preset_3()
+###### All
 
-<img src="./images/logger-md-preset-3.png" width=265 height=75>
+log.set.token(token)<br>
+log.set.level(level)
 
-#### log.preset_4()
+###### Specific
 
-<img src="./images/logger-md-preset-4.png" width=270 height=80>
+log.debug.token(token)<br>
+log.debug.level(level)
 
-## log.update.symbol(symbol)
+log.info.token(token)<br>
+log.info.level(level)
 
-Sets the same symbol for ALL message levels.
+log.success.token(token)<br>
+log.success.level(level)
 
-```javascript
-  log.update.symbol('SYMBOL ');
-```
+log.warning.token(token)<br>
+log.warning.level(level)
 
-<img src="./images/logger-md-symbol.png" width=260 height=80>
+log.error.token(token)<br>
+log.error.level(level)
 
-## log.update.symbol.color(color)
+### Alignment
 
-Sets the same symbol color for ALL message levels.
+log.align.token(align)
+log.align.level(align)
 
-```javascript
-  log.update.symbol.color('#0000ff');
-```
+### Save / load state
 
-<img src="./images/logger-md-symbol-color.png" width=240 height=80>
+log.save(preset)<br>
+log.load(preset)
 
-## log.update.message.color(color)
+### Format
 
-Sets the same message color for ALL message levels.
+log.format(format)
 
-```javascript
-  log.update.message.color('#0000ff');
-```
+###### Tokens
 
-<img src="./images/logger-md-message-color.png" width=240 height=80>
+:tkn<br>
+:padtkn<br>
+:lvl<br>
+:padlvl<br>
+:msg
 
-## log.update.level(level)
+### Log level
 
-Displays all messages above the set log level. The levels start from DEBUG(0) and go up to ERROR(4). The enums for the level can be accessed with:
+log.level(level)
 
-  - log.DEBUG
-  - log.INFO
-  - log.SUCCESS
-  - log.WARNING
-  - log.ERROR
-  
-```javascript
-  log.update.level(log.WARNING);
-```
+###### Levels
 
-<img src="./images/logger-md-level.png" width=240 height=50>
+log.enum.debug<br>
+log.enum.info<br>
+log.enum.success<br>
+log.enum.warning<br>
+log.enum.error
 
-# Advanced usage
-
-Return strings without writing them to stdout / stderr.
-The functions return an object with the modified string and the length of the original message.
-
-```javascript
-  var value = log.info.return(`text`);
-  var message = value.message; // color codes included
-  var length = value.length; // `text`.length w/o color codes
-```
