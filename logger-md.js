@@ -152,42 +152,42 @@ Logger.prototype = {
     Logger.prototype.log_lvl = lvl;
   },
   save_preset: function(name) {
-    Logger.prototype.saved_state[name] = {
+    Logger.prototype.saved_state[`${name}`] = {
       fmt: Logger.prototype.fmt,
-      tkn: Logger.prototype.tkn,
-      lvl: Logger.prototype.lvl,
-      aln: Logger.prototype.aln,
+      tkn: JSON.parse(JSON.stringify(Logger.prototype.tkn)),
+      lvl: JSON.parse(JSON.stringify(Logger.prototype.lvl)),
+      aln: JSON.parse(JSON.stringify(Logger.prototype.aln)),
       msg: Logger.prototype.msg,
       out: Logger.prototype.out,
-      clr: Logger.prototype.clr,
+      clr: JSON.parse(JSON.stringify(Logger.prototype.clr)),
       fnl: Logger.prototype.fnl,
       crt_lvl: Logger.prototype.crt_lvl,
       log_lvl: Logger.prototype.log_lvl,
       clr_en: Logger.prototype.clr_en,
-      pad: Logger.prototype.pad,
+      pad: JSON.parse(JSON.stringify(Logger.prototype.pad)),
     }
   },
   load_preset: function(name) {
-    Logger.prototype.fmt = Logger.prototype.saved_state[name].fmt;
-    Logger.prototype.tkn = Logger.prototype.saved_state[name].tkn;
-    Logger.prototype.lvl = Logger.prototype.saved_state[name].lvl;
-    Logger.prototype.aln = Logger.prototype.saved_state[name].aln;
-    Logger.prototype.msg = Logger.prototype.saved_state[name].msg;
-    Logger.prototype.out = Logger.prototype.saved_state[name].out;
-    Logger.prototype.clr = Logger.prototype.saved_state[name].clr;
-    Logger.prototype.fnl = Logger.prototype.saved_state[name].fnl;
-    Logger.prototype.crt_lvl = Logger.prototype.saved_state[name].crt_lvl;
-    Logger.prototype.log_lvl = Logger.prototype.saved_state[name].log_lvl;
-    Logger.prototype.clr_en = Logger.prototype.saved_state[name].clr_en;
-    Logger.prototype.pad = Logger.prototype.saved_state[name].pad;
+    Logger.prototype.fmt = Logger.prototype.saved_state[`${name}`].fmt;
+    Logger.prototype.tkn = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].tkn));
+    Logger.prototype.lvl = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].lvl));
+    Logger.prototype.aln = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].aln));
+    Logger.prototype.msg = Logger.prototype.saved_state[`${name}`].msg;
+    Logger.prototype.out = Logger.prototype.saved_state[`${name}`].out;
+    Logger.prototype.clr = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].clr));
+    Logger.prototype.fnl = Logger.prototype.saved_state[`${name}`].fnl;
+    Logger.prototype.crt_lvl = Logger.prototype.saved_state[`${name}`].crt_lvl;
+    Logger.prototype.log_lvl = Logger.prototype.saved_state[`${name}`].log_lvl;
+    Logger.prototype.clr_en = Logger.prototype.saved_state[`${name}`].clr_en;
+    Logger.prototype.pad = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].pad));
   }
 }
 
-Logger.prototype.align.tkn = function(tkn) {
+Logger.prototype.align.token = function(tkn) {
   Logger.prototype.aln.tkn = tkn;
   Logger.prototype.padder('tkn');
 };
-Logger.prototype.align.lvl = function(lvl) {
+Logger.prototype.align.level = function(lvl) {
   Logger.prototype.aln.lvl = lvl;
   Logger.prototype.padder('lvl');
 };
@@ -250,16 +250,23 @@ Logger.prototype.error.level = function(lvl) {
 Logger.prototype.set.format = function(fmt) {
   Logger.prototype.fmt = fmt;
 };
+
+Logger.prototype.set.color = {};
+Logger.prototype.set.color.token = function(clr) {
+  Object.keys(Logger.prototype.clr.tkn).forEach((color) => {
+    Logger.prototype.clr.tkn[`${color}`] = colors.ansi256.hex(clr);
+  });
+}
   
 const logger = new Logger();
 
 logger.set.format(':lvl:padlvl :msg');
-logger.align.lvl('right');
+logger.align.level('right');
 logger.save_preset(1);
 
 logger.set.format(':tkn:padtkn :lvl:padlvl :msg');
-logger.align.lvl('right');
-logger.align.tkn('left');
+logger.align.level('right');
+logger.align.token('left');
 logger.save_preset(2);
 
 module.exports = logger;
