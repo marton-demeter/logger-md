@@ -41,7 +41,8 @@ Logger.prototype = {
     warning: 'warning',
     error: 'error',
   },
-  output: console.log,
+  output: process.stdout.write.bind(process.stdout),
+  line_end: '\n',
   clr: {
     tkn: {
       debug: colors.hex('#999'),
@@ -78,38 +79,48 @@ Logger.prototype = {
     Logger.prototype.crt_lvl = 'debug';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
-    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.output(Logger.prototype.fnl);
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl]) {
+      Logger.prototype.fnl += Logger.prototype.line_end;
+      return Logger.prototype.output(Logger.prototype.fnl);
+    }
   },
   info: function(msg) {
     Logger.prototype.crt_lvl = 'info';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
-    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.output(Logger.prototype.fnl);
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl]) {
+      Logger.prototype.fnl += Logger.prototype.line_end;
+      return Logger.prototype.output(Logger.prototype.fnl);
+    }
   },
   success: function(msg) {
     Logger.prototype.crt_lvl = 'success';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
-    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.output(Logger.prototype.fnl);
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl]) {
+      Logger.prototype.fnl += Logger.prototype.line_end;
+      return Logger.prototype.output(Logger.prototype.fnl);
+    }
   },
   warning: function(msg) {
     Logger.prototype.crt_lvl = 'warning';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
     if(Logger.prototype.output === console.log) Logger.prototype.output = console.error;
-    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.output(Logger.prototype.fnl);
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl]) {
+      Logger.prototype.fnl += Logger.prototype.line_end;
+      return Logger.prototype.output(Logger.prototype.fnl);
+    }
   },
   error: function(msg) {
     Logger.prototype.crt_lvl = 'error';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
     if(Logger.prototype.output === console.log) Logger.prototype.output = console.error;
-    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.output(Logger.prototype.fnl);
+    if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl]) {
+      Logger.prototype.fnl += Logger.prototype.line_end;
+      return Logger.prototype.output(Logger.prototype.fnl);
+    }
   },
   replace: function() {
     var rep_tkn = Logger.prototype.pad.tkn - Logger.prototype.tkn[Logger.prototype.crt_lvl].length;
@@ -154,8 +165,22 @@ Logger.prototype = {
   },
   align: {},
   set: {},
+  color: {},
+  token: {},
   level: function(lvl) {
     Logger.prototype.log_lvl = lvl;
+  },
+  format: function(fmt) {
+    Logger.prototype.fmt = fmt;
+  },
+  out: function(fn) {
+    if(fn === process.stdout.write) Logger.prototype.output = process.stdout.write.bind(process.stdout);
+    else if(!fn || fn === 'return') Logger.prototype.output = Logger.prototype.return_fn;
+    else Logger.prototype.output = fn;
+  },
+  ending: function(end) {
+    if(!end) Logger.prototype.line_end = '';
+    else Logger.prototype.line_end = end;
   },
   save: function(name) {
     Logger.prototype.saved_state[`${name}`] = {
@@ -187,12 +212,7 @@ Logger.prototype = {
     Logger.prototype.clr_en = Logger.prototype.saved_state[`${name}`].clr_en;
     Logger.prototype.pad = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].pad));
   },
-  out: function(fn) {
-    var k = function(a){ return a };
-    if(!fn || fn === 'return') Logger.prototype.output = k;
-    else Logger.prototype.output = fn;
-    console.log(Logger.prototype.output);
-  }
+  return_fn: function(a) { return a },
 }
 
 Logger.prototype.align.token = function(tkn) {
@@ -231,8 +251,6 @@ Logger.prototype.error.token = function(tkn) {
   Logger.prototype.padder('tkn');
 };
 
-Logger.prototype.level
-
 Logger.prototype.set.level = function(lvl) {
   Object.keys(Logger.prototype.lvl).forEach((key) => {
     Logger.prototype.lvl[`${key}`] = lvl;
@@ -260,11 +278,7 @@ Logger.prototype.error.level = function(lvl) {
   Logger.prototype.padder('lvl');
 };
 
-Logger.prototype.format = function(fmt) {
-  Logger.prototype.fmt = fmt;
-};
 
-Logger.prototype.color = {};
 Logger.prototype.color.token = function(clr) {
   Object.keys(Logger.prototype.clr.tkn).forEach((color) => {
     Logger.prototype.clr.tkn[`${color}`] = colors.hex(clr);
@@ -288,16 +302,13 @@ Logger.prototype.color.disable = function() {
   Logger.prototype.clr_en = false;
 };
 
-Logger.prototype.token = {};
 Logger.prototype.token.disable = function() {
   Logger.prototype.fmt = Logger.prototype.fmt.replace(' :tkn:padtkn', '');
   Logger.prototype.fmt = Logger.prototype.fmt.replace(':tkn:padtkn ', '');
   Logger.prototype.fmt = Logger.prototype.fmt.replace(' :padtkn:tkn', '');
   Logger.prototype.fmt = Logger.prototype.fmt.replace(':padtkn:tkn ', '');
 }
-Logger.prototype.level = function(lvl) {
- Logger.prototype.log_lvl = lvl; 
-};
+
 Logger.prototype.level.disable = function() {
   Logger.prototype.fmt = Logger.prototype.fmt.replace(' :lvl:padlvl', '');
   Logger.prototype.fmt = Logger.prototype.fmt.replace(':lvl:padlvl ', '');
