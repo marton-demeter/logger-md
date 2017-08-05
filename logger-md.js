@@ -41,7 +41,7 @@ Logger.prototype = {
     warning: 'warning',
     error: 'error',
   },
-  out: console.log,
+  output: console.log,
   clr: {
     tkn: {
       debug: colors.hex('#999'),
@@ -79,37 +79,37 @@ Logger.prototype = {
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
     if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.out(Logger.prototype.fnl);
+      Logger.prototype.output(Logger.prototype.fnl);
   },
   info: function(msg) {
     Logger.prototype.crt_lvl = 'info';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
     if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.out(Logger.prototype.fnl);
+      Logger.prototype.output(Logger.prototype.fnl);
   },
   success: function(msg) {
     Logger.prototype.crt_lvl = 'success';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
     if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.out(Logger.prototype.fnl);
+      Logger.prototype.output(Logger.prototype.fnl);
   },
   warning: function(msg) {
     Logger.prototype.crt_lvl = 'warning';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
-    Logger.prototype.out = console.error;
+    if(Logger.prototype.output === console.log) Logger.prototype.output = console.error;
     if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.out(Logger.prototype.fnl);
+      Logger.prototype.output(Logger.prototype.fnl);
   },
   error: function(msg) {
     Logger.prototype.crt_lvl = 'error';
     Logger.prototype.msg[Logger.prototype.crt_lvl] = msg;
     Logger.prototype.replace();
-    Logger.prototype.out = console.error;
+    if(Logger.prototype.output === console.log) Logger.prototype.output = console.error;
     if(Logger.prototype.log_lvl <= Logger.prototype.enum[Logger.prototype.crt_lvl])
-      Logger.prototype.out(Logger.prototype.fnl);
+      Logger.prototype.output(Logger.prototype.fnl);
   },
   replace: function() {
     var rep_tkn = Logger.prototype.pad.tkn - Logger.prototype.tkn[Logger.prototype.crt_lvl].length;
@@ -164,7 +164,7 @@ Logger.prototype = {
       lvl: JSON.parse(JSON.stringify(Logger.prototype.lvl)),
       aln: JSON.parse(JSON.stringify(Logger.prototype.aln)),
       msg: Logger.prototype.msg,
-      out: Logger.prototype.out,
+      out: Logger.prototype.output,
       clr: JSON.parse(JSON.stringify(Logger.prototype.clr)),
       fnl: Logger.prototype.fnl,
       crt_lvl: Logger.prototype.crt_lvl,
@@ -179,13 +179,19 @@ Logger.prototype = {
     Logger.prototype.lvl = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].lvl));
     Logger.prototype.aln = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].aln));
     Logger.prototype.msg = Logger.prototype.saved_state[`${name}`].msg;
-    Logger.prototype.out = Logger.prototype.saved_state[`${name}`].out;
+    Logger.prototype.output = Logger.prototype.saved_state[`${name}`].out;
     Logger.prototype.clr = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].clr));
     Logger.prototype.fnl = Logger.prototype.saved_state[`${name}`].fnl;
     Logger.prototype.crt_lvl = Logger.prototype.saved_state[`${name}`].crt_lvl;
     Logger.prototype.log_lvl = Logger.prototype.saved_state[`${name}`].log_lvl;
     Logger.prototype.clr_en = Logger.prototype.saved_state[`${name}`].clr_en;
     Logger.prototype.pad = JSON.parse(JSON.stringify(Logger.prototype.saved_state[`${name}`].pad));
+  },
+  out: function(fn) {
+    var k = function(a){ return a };
+    if(!fn || fn === 'return') Logger.prototype.output = k;
+    else Logger.prototype.output = fn;
+    console.log(Logger.prototype.output);
   }
 }
 
