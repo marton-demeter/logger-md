@@ -284,6 +284,27 @@ Logger.prototype.debug.color = function(clr) {
   Logger.prototype.clr.lvl.debug = colors.hex(clr);
   Logger.prototype.clr.msg.debug = colors.hex(clr);
 }
+Logger.prototype.info.color = function(clr) {
+  Logger.prototype.clr.tkn.info = colors.hex(clr);
+  Logger.prototype.clr.lvl.info = colors.hex(clr);
+  Logger.prototype.clr.msg.info = colors.hex(clr);
+}
+Logger.prototype.success.color = function(clr) {
+  Logger.prototype.clr.tkn.success = colors.hex(clr);
+  Logger.prototype.clr.lvl.success = colors.hex(clr);
+  Logger.prototype.clr.msg.success = colors.hex(clr);
+}
+Logger.prototype.warning.color = function(clr) {
+  Logger.prototype.clr.tkn.warning = colors.hex(clr);
+  Logger.prototype.clr.lvl.warning = colors.hex(clr);
+  Logger.prototype.clr.msg.warning = colors.hex(clr);
+}
+Logger.prototype.error.color = function(clr) {
+  Logger.prototype.clr.tkn.error = colors.hex(clr);
+  Logger.prototype.clr.lvl.error = colors.hex(clr);
+  Logger.prototype.clr.msg.error = colors.hex(clr);
+}
+
 Logger.prototype.debug.color.token = function(clr) {
   Logger.prototype.clr.tkn.debug = colors.hex(clr);
 }
@@ -327,31 +348,6 @@ Logger.prototype.error.color.level = function(clr) {
   Logger.prototype.clr.lvl.error = colors.hex(clr);
 }
 Logger.prototype.error.color.message = function(clr) {
-  Logger.prototype.clr.msg.error = colors.hex(clr);
-}
-Logger.prototype.debug.color = function(clr) {
-  Logger.prototype.clr.tkn.debug = colors.hex(clr);
-  Logger.prototype.clr.lvl.debug = colors.hex(clr);
-  Logger.prototype.clr.msg.debug = colors.hex(clr);
-}
-Logger.prototype.info.color = function(clr) {
-  Logger.prototype.clr.tkn.info = colors.hex(clr);
-  Logger.prototype.clr.lvl.info = colors.hex(clr);
-  Logger.prototype.clr.msg.info = colors.hex(clr);
-}
-Logger.prototype.success.color = function(clr) {
-  Logger.prototype.clr.tkn.success = colors.hex(clr);
-  Logger.prototype.clr.lvl.success = colors.hex(clr);
-  Logger.prototype.clr.msg.success = colors.hex(clr);
-}
-Logger.prototype.warning.color = function(clr) {
-  Logger.prototype.clr.tkn.warning = colors.hex(clr);
-  Logger.prototype.clr.lvl.warning = colors.hex(clr);
-  Logger.prototype.clr.msg.warning = colors.hex(clr);
-}
-Logger.prototype.error.color = function(clr) {
-  Logger.prototype.clr.tkn.error = colors.hex(clr);
-  Logger.prototype.clr.lvl.error = colors.hex(clr);
   Logger.prototype.clr.msg.error = colors.hex(clr);
 }
 
