@@ -3,6 +3,7 @@ const padder = require('pad-md');
 const os = require('os');
 
 if(os.platform() === 'darwin') colors = colors.ansi256;
+else if(os.platform() === 'linux') colors = colors.ansi256;
 else colors = colors.ansi8;
 
 Logger = function() {}
@@ -278,7 +279,82 @@ Logger.prototype.error.level = function(lvl) {
   Logger.prototype.padder('lvl');
 };
 
-
+Logger.prototype.debug.color = function(clr) {
+  Logger.prototype.clr.tkn.debug = colors.hex(clr);
+  Logger.prototype.clr.lvl.debug = colors.hex(clr);
+  Logger.prototype.clr.msg.debug = colors.hex(clr);
+}
+Logger.prototype.debug.color.token = function(clr) {
+  Logger.prototype.clr.tkn.debug = colors.hex(clr);
+}
+Logger.prototype.debug.color.level = function(clr) {
+  Logger.prototype.clr.lvl.debug = colors.hex(clr);
+}
+Logger.prototype.debug.color.message = function(clr) {
+  Logger.prototype.clr.msg.debug = colors.hex(clr);
+}
+Logger.prototype.info.color.token = function(clr) {
+  Logger.prototype.clr.tkn.info = colors.hex(clr);
+}
+Logger.prototype.info.color.level = function(clr) {
+  Logger.prototype.clr.lvl.info = colors.hex(clr);
+}
+Logger.prototype.info.color.message = function(clr) {
+  Logger.prototype.clr.msg.info = colors.hex(clr);
+}
+Logger.prototype.success.color.token = function(clr) {
+  Logger.prototype.clr.tkn.success = colors.hex(clr);
+}
+Logger.prototype.success.color.level = function(clr) {
+  Logger.prototype.clr.lvl.success = colors.hex(clr);
+}
+Logger.prototype.success.color.message = function(clr) {
+  Logger.prototype.clr.msg.success = colors.hex(clr);
+}
+Logger.prototype.warning.color.token = function(clr) {
+  Logger.prototype.clr.tkn.warning = colors.hex(clr);
+}
+Logger.prototype.warning.color.level = function(clr) {
+  Logger.prototype.clr.lvl.warning = colors.hex(clr);
+}
+Logger.prototype.warning.color.message = function(clr) {
+  Logger.prototype.clr.msg.warning = colors.hex(clr);
+}
+Logger.prototype.error.color.token = function(clr) {
+  Logger.prototype.clr.tkn.error = colors.hex(clr);
+}
+Logger.prototype.error.color.level = function(clr) {
+  Logger.prototype.clr.lvl.error = colors.hex(clr);
+}
+Logger.prototype.error.color.message = function(clr) {
+  Logger.prototype.clr.msg.error = colors.hex(clr);
+}
+Logger.prototype.debug.color = function(clr) {
+  Logger.prototype.clr.tkn.debug = colors.hex(clr);
+  Logger.prototype.clr.lvl.debug = colors.hex(clr);
+  Logger.prototype.clr.msg.debug = colors.hex(clr);
+}
+Logger.prototype.info.color = function(clr) {
+  Logger.prototype.clr.tkn.info = colors.hex(clr);
+  Logger.prototype.clr.lvl.info = colors.hex(clr);
+  Logger.prototype.clr.msg.info = colors.hex(clr);
+}
+Logger.prototype.success.color = function(clr) {
+  Logger.prototype.clr.tkn.success = colors.hex(clr);
+  Logger.prototype.clr.lvl.success = colors.hex(clr);
+  Logger.prototype.clr.msg.success = colors.hex(clr);
+}
+Logger.prototype.warning.color = function(clr) {
+  Logger.prototype.clr.tkn.warning = colors.hex(clr);
+  Logger.prototype.clr.lvl.warning = colors.hex(clr);
+  Logger.prototype.clr.msg.warning = colors.hex(clr);
+}
+Logger.prototype.error.color = function(clr) {
+  Logger.prototype.clr.tkn.error = colors.hex(clr);
+  Logger.prototype.clr.lvl.error = colors.hex(clr);
+  Logger.prototype.clr.msg.error = colors.hex(clr);
+}
+-
 Logger.prototype.color.token = function(clr) {
   Object.keys(Logger.prototype.clr.tkn).forEach((color) => {
     Logger.prototype.clr.tkn[`${color}`] = colors.hex(clr);
