@@ -354,7 +354,7 @@ Logger.prototype.error.color = function(clr) {
   Logger.prototype.clr.lvl.error = colors.hex(clr);
   Logger.prototype.clr.msg.error = colors.hex(clr);
 }
--
+
 Logger.prototype.color.token = function(clr) {
   Object.keys(Logger.prototype.clr.tkn).forEach((color) => {
     Logger.prototype.clr.tkn[`${color}`] = colors.hex(clr);
