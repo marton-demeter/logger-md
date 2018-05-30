@@ -399,4 +399,4 @@ logger.align.level('right');
 logger.align.token('left');
 logger.save(2);
 
-module.exports = logger;
+module.exports = { log: logger };
